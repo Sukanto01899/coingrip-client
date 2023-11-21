@@ -1,5 +1,5 @@
 import axios from "axios";
-const base_url = "https://send-money.onrender.com";
+const base_url = "https://send-money.onrender.com/api";
 
 const baseApi = axios.create({
     baseURL: base_url,
