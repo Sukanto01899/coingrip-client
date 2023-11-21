@@ -13,6 +13,8 @@ const data = [
 
 const BalanceState = ({setShowBalance, showBalance}) => {
     const {state} = useAuthData();
+
+    console.log(state)
   
     const segments = state?.authUser?.balance?.assets?.map((asset, i) => (
         <Progress.Section value={asset.amount / 100} color='#47d6ab' key={i}>
@@ -20,7 +22,7 @@ const BalanceState = ({setShowBalance, showBalance}) => {
         </Progress.Section>
       ));
     
-      const descriptions = state?.assets?.map((asset) => (
+      const descriptions = state?.assetsData?.assets?.map((asset) => (
         <Box key={asset.name} style={{ borderBottomColor: '#47d6ab' }} className={classes.stat}>
           <Text tt="uppercase" fz="xs" c="dimmed" fw={700}>
             {asset.name}

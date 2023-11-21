@@ -46,4 +46,16 @@ export const getDemoBalance = async (assetId)=>{
   return res.data;
 }
 
+export const generateAuthDataFn = async ()=>{
+  baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
+  const res = await baseApi.post('/user/otp/generate');
+  return res.data;
+}
+
+export const verifyOtpFn = async ({code})=>{
+  baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
+  const res = await baseApi.post('/user/otp/verify', {code: code});
+  return res.data;
+}
+
 export default baseApi;

@@ -1,23 +1,12 @@
 import { Flex, Paper, Text } from '@mantine/core';
-import { useQuery } from 'react-query';
-import { getAssetsFn } from '../../../api/baseApi';
 import { useAuthData } from '../../../context/AuthContext';
 import TableSkeleton from '../../LoadingComponents/TableSkeleton';
 import Asset from './Asset';
 
 const AssetList = ({showBalance}) => {
-  const {dispatch} = useAuthData();
-  const {data: assets, isLoading} = useQuery({
-    queryKey: ['assets'], 
-    queryFn: getAssetsFn,
-    staleTime: 10000,
-    select: (data)=> data,
-    onSuccess: (data) => {
-      dispatch({ type: 'SET_ASSETS', payload: data });
-    }
-  })
+  const {state} = useAuthData();
 
-    const rows = assets?.map((asset, i, allAssets) => (
+    const rows = state?.assetsData?.assets?.map((asset, i, allAssets) => (
         <Asset key={i} asset={asset} allAssets={allAssets} showBalance={showBalance}/>
       ));
     return (
@@ -27,7 +16,7 @@ const AssetList = ({showBalance}) => {
       <Text>Assets</Text>
       <Text>Send / Receive</Text>
     </Flex>
-    {isLoading ? <TableSkeleton/> : rows}
+    {state?.assets?.assets?.loading ? <TableSkeleton/> : rows}
    </Paper>
     );
 };

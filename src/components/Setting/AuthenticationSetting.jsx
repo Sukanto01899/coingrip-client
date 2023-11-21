@@ -2,10 +2,12 @@ import { Button, Divider, Group, Paper, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconCheck, IconX } from '@tabler/icons-react';
 import React, { useState } from 'react';
-import baseApi from '../../api/baseApi';
+import { useMutation } from 'react-query';
+import { generateAuthDataFn } from '../../api/baseApi';
 import { useAuthData } from '../../context/AuthContext';
 import ActiveAuthForm from '../Form/ActiveAuthForm';
 import ModalLayout from '../ModalLayout/ModalLayout';
+import toast from '../Toast/Toast';
 
 const AuthenticationSetting = () => {
     const [otpUrl, setOtpUrl] = useState('');
@@ -13,16 +15,16 @@ const AuthenticationSetting = () => {
     const [authFormOpened, { open, close}] = useDisclosure(false);
     const {authUser} = useAuthData();
 
-    const generateAuthData = ()=>{
-        baseApi.post('/user/otp/generate')
-        .then(res => {
-            const {otpauth_url, base32} = res?.data?.authData;
-            setOtpUrl(otpauth_url);
-            setBase32(base32);
+    const {mutate: generateAuthData, data,  isLoading, isError} = useMutation(()=> generateAuthDataFn(), {
+        onSuccess: (data)=>{
             open()
-        })
-        .catch(err => console.log(err))
-    }
+            console.log(data)
+        },
+        onError: (err)=>{
+            toast.error({title: err.message, message: "Try again later."})
+        }
+    })
+
     
     return (
     <Paper p='md'>
@@ -32,8 +34,8 @@ const AuthenticationSetting = () => {
        {authUser?.auth?.otp_enabled ? <Text>2FA Enabled<IconCheck color='green'/></Text> : <Text>2FA Disabled <IconX color='red'/></Text>}
        </Group>
 
-        {authUser?.auth?.otp_enabled ? <Button>Disable</Button> : <Button onClick={generateAuthData}>Set up authentication</Button>}
-        <ModalLayout opened={authFormOpened} close={close} title='Authentication set up'><ActiveAuthForm close={close} otpUrl={otpUrl} base32={base32}/></ModalLayout>
+        {authUser?.auth?.otp_enabled ? <Button>Disable</Button> : <Button loading={isLoading} onClick={generateAuthData}>Set up authentication</Button>}
+        <ModalLayout opened={authFormOpened} close={close} title='Authentication set up'><ActiveAuthForm close={close} otpUrl={data?.authData?.otpauth_url} base32={data?.authData?.base32}/></ModalLayout>
    </Paper>
     );
 };
