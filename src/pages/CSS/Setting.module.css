@@ -1,0 +1,14 @@
+.menu {
+  font-weight: 500;
+  height: rem(38);
+  background-color: transparent;
+  position: relative;
+  bottom: -1px;
+
+  &:hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-1),
+      var(--mantine-color-dark-5)
+    );
+  }
+}
