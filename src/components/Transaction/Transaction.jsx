@@ -6,7 +6,7 @@ import { useAuthData } from '../../context/AuthContext';
 const Transaction = ({transaction}) => {
     const [transactionTime, setTransactionTime] =useState('');
     const {state: {authUser}} = useAuthData();
-    const [timeEx, setTimeEx] =useState('')
+    const [timeEx, setTimeEx] =useState('');
     const msec = Date.now() - new Date(transaction?.createdAt)
     const sec = msec / 1000;
     const min = sec /60;
@@ -35,7 +35,26 @@ const Transaction = ({transaction}) => {
             setTransactionTime(sec);
             setTimeEx('secs')
         }
+
+        // Set transaction time
+       
     }, [transaction])
+
+    const TransactionBadge = ()=>{
+        switch(transaction.transactionType){
+            case 'exchange':
+                return <Badge color="blue">Exchange</Badge>;
+            case 'transfer':
+               return transaction?.from?.uuid === authUser?._id ? <Badge color="yellow">Send</Badge> : <Badge color="green">Received</Badge>
+            case 'deposit':
+                return <Badge>Deposit</Badge>
+            default:
+                return <Badge>Withdraw</Badge>
+        }
+    }
+
+    const transferBadge = transaction?.from?.uuid === authUser?._id ? <Badge color="yellow">Send</Badge> : <Badge color="green">Received</Badge>
+    const exchangeBadge = <Badge color="blue">Exchange</Badge>
 
     return (
         <Table.Tr>
@@ -58,7 +77,7 @@ const Transaction = ({transaction}) => {
             <Table.Td>{transaction?.amount}</Table.Td>
             <Table.Td>{transaction?.asset}</Table.Td>
             <Table.Td>
-                {transaction?.from?.uuid === authUser?._id ? <Badge color="yellow">Send</Badge> : <Badge color="green">Received</Badge>}
+                  <TransactionBadge/>
             </Table.Td>
           </Table.Tr>
     );

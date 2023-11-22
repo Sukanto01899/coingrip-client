@@ -36,7 +36,7 @@ const Asset = ({asset, showBalance, allAssets}) => {
         </Flex>
 
         <ModalLayout opened={sendFormOpened} open={sendFormOpen} close={sendFormClose} title='Send'>
-            <SendForm Close={closed} id={_id} allAssets={allAssets}/>
+            <SendForm close={sendFormClose} id={_id} allAssets={allAssets}/>
         </ModalLayout>
         <ModalLayout opened={receiveFormOpened} open={receiveFormOpen} close={receiveFormClose} title='Receive'>
              {<ReceivedForm userId={state?.authUser?._id} asset={asset}/>}

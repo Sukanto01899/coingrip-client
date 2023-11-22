@@ -1,7 +1,7 @@
-import { notifications } from '@mantine/notifications';
 import { useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import toast from '../components/Toast/Toast';
 import useSaveUserDatabase from './useSaveUserDatabase';
 
 const useLoginRegister = (form) => {
@@ -25,19 +25,19 @@ const useLoginRegister = (form) => {
     const error = registrationError || loginError || updatingError;
     const user = registrationUser || loginUser;
 
-      // user Login handler
+    // user Login handler
     const loginHandler =async ()=>{
         try{
           await signInWithEmailAndPassword(email, password);
         }catch(err){
-          userErrorHandler(err)
+          toast.error({title: err.message, message: 'Please try again'})
         }
     }
 
     // user Registration Handler
     const registerHandler =async ()=>{
         if(password !== confirmPassword){
-           userErrorHandler({message: 'Password not match'})
+           toast.error({title: 'Password not match', message: 'Please enter right password or reset'})
           return
         }
 
@@ -45,7 +45,7 @@ const useLoginRegister = (form) => {
           await createUserWithEmailAndPassword(email, password);
           await updateProfile({displayName: name});
         }catch(err){
-          userErrorHandler(err)
+          toast.error({title: err.message, message: 'Please try again'})
         }
     }
 
@@ -57,19 +57,12 @@ const useLoginRegister = (form) => {
 
     useEffect(()=>{
         if(error){
-            notifications.show({
+            toast.error({
               title: error.message,
               message: 'Please try again',
-              color: 'red'
             })
         }
     }, [error])
-
-    // Error Handler
-    const userErrorHandler = (error)=>{
-        console.log('Error handler: ',error)
-      }
-
 
     return {registerHandler, loginHandler, loading, error}
 };

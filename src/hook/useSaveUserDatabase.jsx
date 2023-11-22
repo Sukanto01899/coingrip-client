@@ -20,7 +20,7 @@ const useSaveUserDatabase = () => {
             localStorage.setItem('access_token', token);
         },
         onError: (err)=>{
-            toast.error({title: err?.message, message: err?.response?.data?.message})
+            toast.error({title: err?.response?.data?.message || err?.message, message: "Please login again"})
         },
         onSettled: (data, err)=>{
             if(data){

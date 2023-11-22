@@ -20,7 +20,6 @@ const SelectBox = ({label, assets, setValue, value: checkValue, valueFor, error}
         <Combobox
       store={combobox}
       onOptionSubmit={(val) => {
-        console.log(val)
         setValue(valueFor, val);
         combobox.closeDropdown();
       }}
