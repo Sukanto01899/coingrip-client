@@ -21,7 +21,7 @@ import SocialLogin from './SocialLogin';
 const LoginRegisterForm = (props) => {
     const {pathname} = useLocation();
     const path = pathname.replace(/^\/|\/$/g, '');
-    const [type, setType] = useState(path); //State for changing Form type
+    const [type, setType] = useState(path); //State for changing Form registration type
   
     // Form data state
     const form = useForm({

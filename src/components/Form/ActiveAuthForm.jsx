@@ -22,7 +22,7 @@ const ActiveAuthForm = ({otpUrl, base32, close}) => {
     const {mutate: otpVerifyHandler, isLoading} = useMutation((data)=> verifyOtpFn(data), {
         onSuccess: (data)=>{
             close();
-            toast.success({title: "Congratulation", message: "Successfully verified"})
+            toast.success({title: "Successful", message: "Successfully verified"})
         },
         onError: (err)=>{
             toast.error({title: err.message, message: "Try again later."})

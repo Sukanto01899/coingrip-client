@@ -47,21 +47,35 @@ export const getDemoBalance = async (assetId)=>{
   return res.data;
 }
 
+// Generate authentication base32 and otp auth url 
 export const generateAuthDataFn = async ()=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.post('/user/otp/generate');
   return res.data;
 }
-
+// Otp code validation
 export const verifyOtpFn = async ({code})=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.post('/user/otp/verify', {code: code});
   return res.data;
 }
 
+// authentication disable
+export const disableAuthFn = async ({code})=>{
+  baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
+  const res = await baseApi.post('/user/otp/disable', {pin: code});
+  return res.data;
+}
+
 export const sendAssetFn = async ({amount, to, assetId, pin}) =>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.post('/transaction/send', {amount, to, assetId, pin});
+  return res.data;
+}
+
+export const exchangeAssetFn = async ({from, to, amount})=>{
+  baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
+  const res = await baseApi.post(`/transaction/exchange?from=${from}&to=${to}`, {amount});
   return res.data;
 }
 
