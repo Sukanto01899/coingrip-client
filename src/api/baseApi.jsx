@@ -3,7 +3,7 @@ const base_url = "http://localhost:4000/api";
 
 const baseApi = axios.create({
     baseURL: base_url,
-    timeout: 2000,
+    timeout: 5000,
     withCredentials: true
   });
 
@@ -12,6 +12,7 @@ const baseApi = axios.create({
       return response
     },
     (error)=>{
+      console.log(error)
       return Promise.reject(error)
     })
 
@@ -55,6 +56,12 @@ export const generateAuthDataFn = async ()=>{
 export const verifyOtpFn = async ({code})=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.post('/user/otp/verify', {code: code});
+  return res.data;
+}
+
+export const sendAssetFn = async ({amount, to, assetId, pin}) =>{
+  baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
+  const res = await baseApi.post('/transaction/send', {amount, to, assetId, pin});
   return res.data;
 }
 

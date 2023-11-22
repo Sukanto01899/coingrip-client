@@ -6,13 +6,13 @@ import successImg from '../../assets/success.svg';
 import { useAuthData } from '../../context/AuthContext';
 import useSendAsset from '../../hook/useSendAsset';
 
-const SendForm = ({id, allAssets}) => {
+const SendForm = ({id, allAssets, close}) => {
     const {state: {authUser: account}} = useAuthData();
     const [assetBalance, setAssetBalance] = useState(0)
     const [fee, setFee] = useState(0)
     const icon = <IconCurrencyDram style={{ width: rem(20), height: rem(20) }} stroke={1.5} />;
     const assetsIdAndNamePair = allAssets.map(ass => {
-      return {label: ass.name, value: ass._id, fee: ass.fee}
+      return {label: `${ass.name} (${ass.symbol})`, value: ass._id, fee: ass.fee}
     });
     
     const form = useForm({
@@ -62,7 +62,7 @@ const SendForm = ({id, allAssets}) => {
       }, [form.values.amount])
 
       // Send transaction request hook
-      const {sendAssetHandler, isLoading, error, transaction} = useSendAsset();
+      const {sendAssetHandler, isLoading, error, transactionData} = useSendAsset();
 
       // Transaction sender function
       const sendHandler = ()=>{
@@ -92,11 +92,12 @@ const SendForm = ({id, allAssets}) => {
       }
 
       // If transaction successful then return success element
-      if(transaction){
+      if(transactionData?.isSuccess){
         return <>
         <Stack align='center'>
           <Image w={100} h='auto' src={successImg}/>
           <Title>Successful</Title>
+          <Button onClick={close}>Close</Button>
         </Stack>
         </>
       }

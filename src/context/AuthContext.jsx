@@ -57,6 +57,7 @@ export const AuthContextProvider = ({children})=>{
       dispatch({ type: 'SET_ASSETS', payload: {assets: data, loading: false, error: null} });
     },
     onError: (err)=>{
+      console.log(err)
       dispatch({ type: 'SET_ASSETS', payload: {assets: null, loading: false, error: err} });
     }
   })
