@@ -21,9 +21,9 @@ const Asset = ({asset, showBalance, allAssets}) => {
               <div>
                   <Text fz="sm" fw={500}> {name}</Text>
                 <Group>
-                  <Text>{showBalance ? (balance?.amount.toFixed(2) || '0.00') : "*****"}</Text>
+                  <Text>{showBalance ? (balance?.amount.toFixed(5) || '0.00') : "*****"}</Text>
                   <Text fz="xs" c='dimmed'>
-                   ${ balance?.amount ? (usdPrice * balance?.amount).toFixed(5) : '0.00'}
+                   ${ balance?.amount ? (usdPrice * balance?.amount).toFixed(2) : '0.00'}
                   </Text>
                 </Group>
               </div>
@@ -36,10 +36,10 @@ const Asset = ({asset, showBalance, allAssets}) => {
         </Flex>
 
         <ModalLayout opened={sendFormOpened} open={sendFormOpen} close={sendFormClose} title='Send'>
-             <SendForm id={_id} allAssets={allAssets}/>
+            <SendForm Close={closed} id={_id} allAssets={allAssets}/>
         </ModalLayout>
         <ModalLayout opened={receiveFormOpened} open={receiveFormOpen} close={receiveFormClose} title='Receive'>
-             <ReceivedForm userId={state?.authUser?._id} asset={asset}/>
+             {<ReceivedForm userId={state?.authUser?._id} asset={asset}/>}
         </ModalLayout>
         </>
     );

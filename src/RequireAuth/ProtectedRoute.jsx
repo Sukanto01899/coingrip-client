@@ -4,6 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import auth from '../../firebase.init';
 import { getMeFn } from '../api/baseApi';
 import PageLoader from '../components/LoadingComponents/PageLoader';
+import toast from '../components/Toast/Toast';
 import { useAuthData } from '../context/AuthContext';
 import useLogout from '../hook/useLogout';
 
@@ -20,26 +21,23 @@ const ProtectedRoute = ({children}) => {
         error,
         data: AuthData,
       } = useQuery(['authUser'],getMeFn, {
-        retry: 0,
         select: (data) => data,
         onSuccess: (data) => {
           dispatch({ type: 'SET_USER', payload: data });
         },
-        onError: (err)=> {}
+        onError: (err)=> {
+          console.log(err)
+        },
+        enabled: !!user
       });
 
     if(loading || isLoading || isFetching) {
         return <PageLoader/>
     }
 
-    
-    // if(error || googleError){
-    //     notifications.show({
-    //       title: error.message,
-    //       message: "Please try again",
-    //       color: 'red'
-    //     })
-    // }
+    if(error || googleError){
+      toast.error({title: error.message, message: 'Please try again'})
+    } 
     
 
     if(!user){

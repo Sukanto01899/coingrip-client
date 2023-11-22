@@ -1,8 +1,11 @@
 import { Modal } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
+
+
 const ModalLayout = ({opened, close, open, children, title}) => {
     const isMobile = useMediaQuery('(max-width: 50em)');
+
     return (
         <Modal 
         zIndex={2}

@@ -42,7 +42,7 @@ const BalanceState = ({setShowBalance, showBalance}) => {
         <Group justify="space-between">
           <Group align="flex-end" gap="xs">
             <Text fz="xl" fw={700}>
-              {showBalance ? '$' + state?.authUser?.balance?.total_value.toFixed(5) : '*****'}
+              {showBalance ? '$' + state?.authUser?.balance?.total_value.toFixed(2) : '*****'}
             </Text>
             <Text c="teal" className={classes.diff} fz="sm" fw={700}>
               <span>18%</span>
