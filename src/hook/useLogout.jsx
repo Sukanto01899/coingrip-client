@@ -1,15 +1,15 @@
 import { useSignOut } from 'react-firebase-hooks/auth';
-import { QueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import auth from '../../firebase.init';
 
 const useLogout = () => {
     const [signOut, loading, error] = useSignOut(auth);
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
 
     const logout = async ()=>{
         try{
             await signOut();
-            await queryClient.resetQueries(["transaction", "assets", "account"]);
+            queryClient.resetQueries(["transaction", "assets", "account"]);
             queryClient.removeQueries(); 
             localStorage.removeItem('access_token');
         }catch(err){

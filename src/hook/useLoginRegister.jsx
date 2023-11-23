@@ -12,7 +12,7 @@ const useLoginRegister = (form) => {
         registrationUser,
         registrationLoading,
         registrationError,
-      ] = useCreateUserWithEmailAndPassword(auth);
+      ] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification: true});
     const [
         signInWithEmailAndPassword,
         loginUser,

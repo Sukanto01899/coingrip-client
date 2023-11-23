@@ -1,13 +1,15 @@
-import { ActionIcon, Button, Card, CopyButton, Flex, Image, Stack, Text, Tooltip, rem } from '@mantine/core';
+import { ActionIcon, Card, CopyButton, Flex, Image, Stack, Text, Tooltip, rem } from '@mantine/core';
 import { IconCheck, IconCopy } from '@tabler/icons-react';
 import QRCode from 'qrcode';
 import React, { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { getDemoBalance } from '../../api/baseApi';
+import { useAuthData } from '../../context/AuthContext';
 import toast from '../Toast/Toast';
 
-const ReceivedForm = ({ userId, asset}) => {
+const ReceivedForm = ({ asset}) => {
   const [qrCode, setQrcode] = useState('');
+  const {state} = useAuthData()
   const {mutate: getDemoAsset, isLoading} = useMutation((data)=> getDemoBalance(data), {
     onSuccess: (data)=>{
       toast.success({title: "Successful", message: "You got some demo balance"})
@@ -18,7 +20,7 @@ const ReceivedForm = ({ userId, asset}) => {
   })
 
   useEffect(()=>{
-    QRCode.toDataURL(asset?._id)
+    QRCode.toDataURL(state.authUser._id)
     .then(setQrcode)
   }, [])
 
@@ -29,9 +31,8 @@ const ReceivedForm = ({ userId, asset}) => {
             </Card>
             <Card withBorder>
             <Flex justify='space-between' align='center'px={10}>
-                <Text>{userId}</Text>
-                <Button loading={isLoading} onClick={()=> getDemoAsset(asset._id)} size='xs'>Get Test Money</Button>
-                <CopyButton value={userId} timeout={2000}>
+                <Text>{state.authUser._id}</Text>
+                <CopyButton value={state.authUser._id} timeout={2000}>
       {({ copied, copy }) => (
         <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
           <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>

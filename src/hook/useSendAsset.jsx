@@ -1,8 +1,9 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { sendAssetFn } from "../api/baseApi";
 import toast from "../components/Toast/Toast";
 
 const useSendAsset = () => {
+  const queryClient = useQueryClient()
   // Use mutation to send request
   const {mutate: sendAsset, data: transactionData, isLoading, error} = useMutation((data)=> sendAssetFn(data), {
     onSuccess: (data)=>{
@@ -10,12 +11,22 @@ const useSendAsset = () => {
         title: "Successful",
         message: `You successfully send ${data?.transaction?.amount} ${data?.transaction?.asset}`
       })
+
+      return Promise.all(
+        [
+          queryClient.invalidateQueries(["balance"]),
+          queryClient.invalidateQueries(["transactions"])
+        ]
+      )
     },
     onError: (err)=>{
       toast.error({
         title: err.response.data.message,
         message: 'Please try again'
       })
+    },
+    onSettled: async (data, err)=>{
+      
     }
   })
 

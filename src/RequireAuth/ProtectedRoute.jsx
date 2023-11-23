@@ -2,7 +2,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery } from 'react-query';
 import { Navigate, useLocation } from 'react-router-dom';
 import auth from '../../firebase.init';
-import { getMeFn } from '../api/baseApi';
+import { getMeFn, getMyBalanceFn } from '../api/baseApi';
 import PageLoader from '../components/LoadingComponents/PageLoader';
 import toast from '../components/Toast/Toast';
 import { useAuthData } from '../context/AuthContext';
@@ -14,19 +14,24 @@ const ProtectedRoute = ({children}) => {
     const {dispatch} = useAuthData();
     const [logout] = useLogout()
 
-    const {
-        isLoading,
-        isFetching,
-        isError,
-        error,
-        data: AuthData,
-      } = useQuery(['authUser'],getMeFn, {
+    const { isLoading, isFetching, isError, error, data: AuthData} = useQuery(['authUser'],getMeFn, {
         select: (data) => data,
         onSuccess: (data) => {
           dispatch({ type: 'SET_USER', payload: data });
         },
         onError: (err)=> {
-          console.log(err)
+          logout()
+        },
+        enabled: !!user
+      });
+      
+    const {data} = useQuery(['balance'], getMyBalanceFn, {
+        select: (data) => data,
+        onSuccess: (data) => {
+          dispatch({ type: 'SET_BALANCE', payload: {balance: data, loading: false, error: null} });
+        },
+        onError: (err)=> {
+          dispatch({ type: 'SET_BALANCE', payload: {balance: null, loading: false, error: err} });
         },
         enabled: !!user
       });

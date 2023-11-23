@@ -1,5 +1,6 @@
 import axios from "axios";
-const base_url = "https://send-money.onrender.com/api";
+const base_url = 'http://localhost:4000/api';
+// const base_url = 'https://send-money.onrender.com/api';
 
 const baseApi = axios.create({
     baseURL: base_url,
@@ -76,6 +77,11 @@ export const sendAssetFn = async ({amount, to, assetId, pin}) =>{
 export const exchangeAssetFn = async ({from, to, amount})=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.post(`/transaction/exchange?from=${from}&to=${to}`, {amount});
+  return res.data;
+}
+export const getMyBalanceFn = async ()=>{
+  baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
+  const res = await baseApi.post("/user/balance");
   return res.data;
 }
 

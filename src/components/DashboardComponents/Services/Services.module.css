@@ -16,6 +16,8 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  text-decoration: none;
+  color: white;
   border-radius: var(--mantine-radius-md);
   height: rem(90px);
   background-color: light-dark(

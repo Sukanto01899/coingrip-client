@@ -1,4 +1,4 @@
-import { Paper, Table, Text } from '@mantine/core';
+import { Pagination, Paper, Table, Text } from '@mantine/core';
 import { useQuery } from 'react-query';
 import { getTransactionsFn } from '../../api/baseApi';
 import TableSkeleton from '../LoadingComponents/TableSkeleton';
@@ -11,12 +11,10 @@ const TransactionList = () => {
     queryFn: getTransactionsFn,
     staleTime: 10000
   })
-
-  console.log(transactions)
      
     return (
           <Paper withBorder radius='md' p='md' mt='lg'>
-            <Text fw={900}>Your Latest Transaction</Text>
+            <Text fz="xl" fw={700}>Your Latest Transaction</Text>
 
             {isLoading ? <TableSkeleton/> : 
             <Table.ScrollContainer minWidth={800}>
@@ -37,6 +35,7 @@ const TransactionList = () => {
            </Table>
           </Table.ScrollContainer>}
             {transactions?.length <= 0  ?  <Text>You don't have any transaction!</Text> : null}
+            {transactions?.length <= 0 || <Pagination size='sm' total={10} />}
           </Paper>
     );
 };

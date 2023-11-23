@@ -1,8 +1,9 @@
-import { Avatar, Button, Container, Group, Title } from '@mantine/core';
+import { Button, Container, Group, Image, Title } from '@mantine/core';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import logo from '../../assets/logo.png';
 import classes from './CSS/Navigation.module.css';
 import NavUserMenu from './NavUserMenu';
 
@@ -14,8 +15,8 @@ const Navigation = () => {
         <Group justify="space-between">
             {/*Right site Logo */}
             <Group>
-            <Avatar component='a' href='/' size={28} src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80'/>
-            <Title size='sm'>Money Sender</Title>
+            <Image w={40} h='auto' src={logo}/>
+            <Title size='sm'>COINGRIP</Title>
             </Group>
              {/* User menu or Login sign up button */}
          {user ? <NavUserMenu user={user}/> : <Group>

@@ -11,6 +11,11 @@ const initialState = {
       loading: true,
       assets: null,
       error: null
+    },
+    balanceData: {
+      loading: true,
+      balance: null, 
+      error: null
     }
   };
 
@@ -27,6 +32,12 @@ const stateReducer = (state, action) => {
         return{
           ...state,
           assetsData: action.payload
+        }
+      }
+      case 'SET_BALANCE':{
+        return{
+          ...state,
+          balanceData: action.payload
         }
       }
       default: {

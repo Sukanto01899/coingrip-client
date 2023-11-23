@@ -1,4 +1,4 @@
-import { Box, Group, Paper, Progress, SimpleGrid, Text, rem } from '@mantine/core';
+import { Box, Group, NumberFormatter, Paper, Progress, SimpleGrid, Text, rem } from '@mantine/core';
 import { IconArrowUpRight, IconEyeOff } from '@tabler/icons-react';
 import { useAuthData } from '../../../context/AuthContext';
 import LightAndDarkButton from '../../Button/LightAndDarkButton';
@@ -13,8 +13,6 @@ const data = [
 
 const BalanceState = ({setShowBalance, showBalance}) => {
     const {state} = useAuthData();
-
-    console.log(state)
   
     const segments = state?.authUser?.balance?.assets?.map((asset, i) => (
         <Progress.Section value={asset.amount / 100} color='#47d6ab' key={i}>
@@ -42,7 +40,7 @@ const BalanceState = ({setShowBalance, showBalance}) => {
         <Group justify="space-between">
           <Group align="flex-end" gap="xs">
             <Text fz="xl" fw={700}>
-              {showBalance ? '$' + state?.authUser?.balance?.total_value.toFixed(2) : '*****'}
+              {showBalance ?  <NumberFormatter prefix='$' thousandSeparator decimalScale={2} value={state?.balanceData?.balance?.totalValue} /> : '*****' }
             </Text>
             <Text c="teal" className={classes.diff} fz="sm" fw={700}>
               <span>18%</span>

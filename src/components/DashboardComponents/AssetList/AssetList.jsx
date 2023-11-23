@@ -6,12 +6,13 @@ import Asset from './Asset';
 const AssetList = ({showBalance}) => {
   const {state} = useAuthData();
 
-    const rows = state?.assetsData?.assets?.map((asset, i, allAssets) => (
-        <Asset key={i} asset={asset} allAssets={allAssets} showBalance={showBalance}/>
+    const rows = state?.assetsData?.assets?.map((asset, i) => (
+        <Asset key={i} asset={asset}  showBalance={showBalance}/>
       ));
     return (
 
    <Paper withBorder radius='md' p='md' mt={20}>
+    <Text fz="xl" fw={700}>Your Portfolio</Text>
     <Flex justify='space-between' py={10}>
       <Text>Assets</Text>
       <Text>Send / Receive</Text>

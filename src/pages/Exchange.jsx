@@ -1,13 +1,15 @@
-import { Button, Card, Center, Container, NumberInput, SimpleGrid, Stack, Title } from '@mantine/core';
+import { Button, Card, Center, Container, NumberInput, SimpleGrid, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { IconRepeat } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import SelectBox from '../components/Input/SelectBox';
+import ServiceLayout from '../components/Layout/ServiceLayout';
+import toast from '../components/Toast/Toast';
 import { useAuthData } from '../context/AuthContext';
 import useExchangeAsset from '../hook/useExchangeAsset';
 
 const Exchange = () => {
-    const {state: {assetsData: {assets, loading}, authUser: {balance}}} = useAuthData();
+    const {state: {assetsData: {assets, loading}, authUser, balanceData}} = useAuthData();
     const [fromAssetAmount, setFormAssetAmount] = useState(0);
     const [toAssetAmount, setToAssetAmount] = useState(0);
     const {exchangeAsset, isLoading} = useExchangeAsset()
@@ -29,15 +31,15 @@ const Exchange = () => {
 
     // Show user to selected asset amount which he have
     useEffect(()=>{
-        const selectedFromUserAssetBalance = balance?.assets?.find(asset => asset.symbol === form.values.assetFrom);
-        const selectedToUserAssetBalance = balance?.assets?.find(asset => asset.symbol === form.values.assetTo);
+        const selectedFromUserAssetBalance = balanceData?.balance?.assets?.find(asset => asset.symbol === form.values.assetFrom);
+        const selectedToUserAssetBalance = balanceData?.balance?.assets?.find(asset => asset.symbol === form.values.assetTo);
         if(selectedFromUserAssetBalance){
             setFormAssetAmount(selectedFromUserAssetBalance.amount.toFixed(2))
         }
         if(selectedToUserAssetBalance){
             setToAssetAmount(selectedToUserAssetBalance.amount.toFixed(2))
         }
-    }, [form.values, balance]);
+    }, [form.values, balanceData]);
 
     // Calculate receivable amount
     const updateReceiveAmount = (payAmount)=>{
@@ -63,17 +65,24 @@ const Exchange = () => {
     }
 
     // Exchange button click handler
-    const exchangeHandler = ()=>{
+    const exchangeHandler =async ()=>{
         const {assetFrom, assetTo, amountToPay} = form.values;
         if(assetFrom === assetTo){
-            return console.log('You can not exchange same assets')
+            return toast.error({title: 'You can not exchange same assets', message: 'Please change the pair'})
         }
-        exchangeAsset({from: assetFrom, to: assetTo, amount: amountToPay});
+        try{
+           await exchangeAsset({from: assetFrom, to: assetTo, amount: amountToPay});
+           setFormAssetAmount(0);
+           setToAssetAmount(0)
+           form.reset();
+        }catch(err){
+            console.log(err)
+        }
     }
 
     return (
-        <Container size='xs' mb={50} px={5}>
-            <Center mb={20}><Title>Exchange</Title></Center>
+        <ServiceLayout title='Exchange'>
+        <Container size='xs' px={5} >
             <form onSubmit={form.onSubmit(exchangeHandler)}>
             <Card radius='md' bg='dark'>
             <Stack>
@@ -129,6 +138,7 @@ const Exchange = () => {
         </Card>
             </form>
         </Container>
+        </ServiceLayout>
     );
 };
 

@@ -6,18 +6,18 @@ import successImg from '../../assets/success.svg';
 import { useAuthData } from '../../context/AuthContext';
 import useSendAsset from '../../hook/useSendAsset';
 
-const SendForm = ({id, allAssets, close}) => {
-    const {state: {authUser: account}} = useAuthData();
+const SendForm = ({id, close}) => {
+    const {state: {authUser: account, assetsData}} = useAuthData();
     const [assetBalance, setAssetBalance] = useState(0)
     const [fee, setFee] = useState(0)
     const icon = <IconCurrencyDram style={{ width: rem(20), height: rem(20) }} stroke={1.5} />;
-    const assetsIdAndNamePair = allAssets.map(ass => {
+    const assetsIdAndNamePair = assetsData.assets.map(ass => {
       return {label: `${ass.name} (${ass.symbol})`, value: ass._id, fee: ass.fee}
     });
     
     const form = useForm({
         initialValues: {
-          assetId: id,
+          assetId: id || null,
           to: '',
           amount: '',
           pin: '',
@@ -55,11 +55,12 @@ const SendForm = ({id, allAssets, close}) => {
 
       // Fee calculation
       useEffect(()=>{
-        const neededAsset = allAssets.find(asset => asset._id === form.values.assetId);
-        const fee_amount = neededAsset.fee;
+        const neededAsset = assetsData?.assets?.find(asset => asset._id === form.values.assetId);
+        console.log(neededAsset)
+        const fee_amount = neededAsset?.fee;
         const calculatedFee = (parseFloat(form.values.amount || 0) * fee_amount) / 100;
         setFee(calculatedFee)
-      }, [form.values.amount])
+      }, [form.values.amount, assetsData?.assets])
 
       // Send transaction request hook
       const {sendAssetHandler, isLoading, error, transactionData} = useSendAsset();

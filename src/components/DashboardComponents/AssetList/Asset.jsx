@@ -5,10 +5,10 @@ import ReceivedForm from '../../Form/ReceivedForm';
 import SendForm from '../../Form/SendForm';
 import ModalLayout from '../../ModalLayout/ModalLayout';
 
-const Asset = ({asset, showBalance, allAssets}) => {
+const Asset = ({asset, showBalance}) => {
     const {name, logo, usdPrice, _id} = asset;
     const {state} = useAuthData();
-    const balance = state?.authUser?.balance?.assets?.find(ast => ast.assetId === _id);
+    const balance = state?.balanceData?.balance?.assets?.find(ast => ast.assetId === _id);
     const { hovered, ref } = useHover();
     const [sendFormOpened, { open: sendFormOpen, close: sendFormClose }] = useDisclosure(false);
     const [receiveFormOpened, { open: receiveFormOpen, close: receiveFormClose }] = useDisclosure(false);
@@ -36,10 +36,10 @@ const Asset = ({asset, showBalance, allAssets}) => {
         </Flex>
 
         <ModalLayout opened={sendFormOpened} open={sendFormOpen} close={sendFormClose} title='Send'>
-            <SendForm close={sendFormClose} id={_id} allAssets={allAssets}/>
+            <SendForm close={sendFormClose} id={_id}/>
         </ModalLayout>
         <ModalLayout opened={receiveFormOpened} open={receiveFormOpen} close={receiveFormClose} title='Receive'>
-             {<ReceivedForm userId={state?.authUser?._id} asset={asset}/>}
+             <ReceivedForm userId={state?.authUser?._id} asset={asset}/>
         </ModalLayout>
         </>
     );

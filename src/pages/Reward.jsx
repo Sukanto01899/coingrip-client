@@ -1,12 +1,12 @@
 import React from 'react';
 import ServiceLayout from '../components/Layout/ServiceLayout';
 
-const Referral = () => {
+const Reward = () => {
     return (
-        <ServiceLayout title="Referral">
+        <ServiceLayout title="Rewards">
             
         </ServiceLayout>
     );
 };
 
-export default Referral;
+export default Reward;
