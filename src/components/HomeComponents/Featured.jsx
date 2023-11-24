@@ -52,11 +52,10 @@ const Featured = () => {
           <Grid gutter={80}>
             <Grid.Col span={{ base: 12, md: 5 }}>
               <Title className={classes.title} order={2}>
-                A fully featured React components library for your next project
+                Earn up to $10 worth of crypto
               </Title>
               <Text c="dimmed">
-                Build fully functional accessible web applications faster than ever – Mantine includes
-                more than 120 customizable components and hooks to cover you in any situation
+              Discover how specific cryptocurrencies work — and get a bit of each crypto to try out for yourself.
               </Text>
     
               <Button
@@ -66,7 +65,7 @@ const Featured = () => {
                 radius="md"
                 mt="xl"
               >
-                Get started
+                Start Earning
               </Button>
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 7 }}>

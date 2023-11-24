@@ -1,8 +1,12 @@
+.wrapper {
+  padding-bottom: calc(var(--mantine-spacing-xl) * 3);
+}
+
 .feature {
   position: relative;
   padding-top: var(--mantine-spacing-xl);
   padding-left: var(--mantine-spacing-xl);
-  padding-bottom: calc(var(--mantine-spacing-xl) * 3);
+  /* padding-bottom: calc(var(--mantine-spacing-xl) * 1); */
 }
 
 .overlay {
@@ -25,5 +29,13 @@
 }
 
 .title {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+}
+.heading {
+  font-family: Greycliff CF, var(--mantine-font-family);
+  font-size: rem(36px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: var(--mantine-spacing-md);
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
 }

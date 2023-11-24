@@ -46,7 +46,7 @@ const LoginRegisterForm = (props) => {
         <Container size='xs' h='100vh' pt={50}>
             <Paper radius="md" p="xl" withBorder {...props}>
               <Text size="lg" fw={500}>
-                Welcome to Mantine, {type} with
+                Welcome to COINGRIP, {type} with
               </Text>
 
              {/* Social Login Component */}
@@ -89,6 +89,10 @@ const LoginRegisterForm = (props) => {
             radius="md"
           />
 
+          {type === 'login' && <Anchor type="button"  c="dimmed" size="xs">
+            Forgot password?
+          </Anchor>}
+
         {type === 'register' && (
             <PasswordInput
             required
@@ -111,11 +115,12 @@ const LoginRegisterForm = (props) => {
         </Stack>
 
         <Group justify="space-between" mt="xl">
-          <Anchor component="button" type="button" c="dimmed" onClick={() => setType(type === 'login' ? 'register' : 'login')} size="xs">
+        <Anchor component="button" type="button" c="dimmed" onClick={() => setType(type === 'login' ? 'register' : 'login')} size="xs">
             {type === 'register'
               ? 'Already have an account? Login'
               : "Don't have an account? Register"}
           </Anchor>
+
           <Button loading={loading} type="submit" radius="xl" disabled={loading}>
             {upperFirst(type)}
           </Button>

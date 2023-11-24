@@ -1,6 +1,6 @@
-import { ActionIcon, Anchor, Group, rem } from '@mantine/core';
-import { MantineLogo } from '@mantine/ds';
+import { ActionIcon, Anchor, Group, Image, rem } from '@mantine/core';
 import { IconBrandInstagram, IconBrandTwitter, IconBrandYoutube } from '@tabler/icons-react';
+import logo from "../../assets/coingrip.png";
 import classes from './Footer.module.css';
 
 const links = [
@@ -27,7 +27,7 @@ const Footer = () => {
     return (
       <div className={classes.footer}>
       <div className={classes.inner}>
-        <MantineLogo size={28} />
+        <Image src={logo} w={50} h='auto' />
 
         <Group className={classes.links}>{items}</Group>
 

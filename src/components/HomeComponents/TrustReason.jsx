@@ -1,5 +1,5 @@
-import { Container, SimpleGrid, Text, rem } from '@mantine/core';
-import { IconCertificate, IconCoin, IconTruck } from '@tabler/icons-react';
+import { Container, SimpleGrid, Text, Title, rem } from '@mantine/core';
+import { IconChecks, IconServer, IconShield } from '@tabler/icons-react';
 import classes from './CSS/TrustReason.module.css';
 
 const Feature = ({ icon: Icon, title, description, className, ...others }) => {
@@ -22,22 +22,22 @@ const Feature = ({ icon: Icon, title, description, className, ...others }) => {
 
 const mockdata = [
     {
-      icon: IconTruck,
-      title: 'Free Worldwide shipping',
+      icon: IconServer,
+      title: 'Secure storage',
       description:
-        'As electricity builds up inside its body, it becomes more aggressive. One theory is that the electricity.',
+        'We store the vast majority of the digital assets in secure offline storage.',
     },
     {
-      icon: IconCertificate,
-      title: 'Best Quality Product',
+      icon: IconShield,
+      title: 'Protected assets',
       description:
-        'Slakoth’s heart beats just once a minute. Whatever happens, it is content to loaf around motionless.',
+        'Our risk management measures are designed to protect your assets.',
     },
     {
-      icon: IconCoin,
-      title: 'Very Affordable Pricing',
+      icon: IconChecks,
+      title: 'Industry best practices',
       description:
-        'Thought to have gone extinct, Relicanth was given a name that is a variation of the name of the person who discovered.',
+        'Coinbase supports a variety of the most popular digital currencies.',
     },
   ];
 
@@ -45,8 +45,9 @@ function TrustReason() {
     const items = mockdata.map((item) => <Feature {...item} key={item.title} />);
   
     return (
-      <Container px={0}>
-        <SimpleGrid cols={{ base: 1, sm: 3 }} spacing={50}>
+      <Container className={classes.wrapper} px={0}>
+        <Title className={classes.heading}>The most trusted <br /> cryptocurrency platform</Title>
+        <SimpleGrid mt={50} cols={{ base: 1, sm: 3 }} spacing={50}>
           {items}
         </SimpleGrid>
       </Container>

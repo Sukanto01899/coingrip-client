@@ -44,7 +44,7 @@ const settingOptions = [
 
 const Setting = () => {
     return (
-        <Paper>
+        <Paper mih="100vh">
             <UserDisplay/>
            <Grid columns={12}>
             <Grid.Col span={{base: 12, sm: 4}}>
