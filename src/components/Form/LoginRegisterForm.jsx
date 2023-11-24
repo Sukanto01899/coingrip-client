@@ -13,15 +13,17 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { upperFirst } from '@mantine/hooks';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import useLoginRegister from '../../hook/useLoginRegister';
+import Captcha from '../Captcha/Captcha';
 import SocialLogin from './SocialLogin';
 
 const LoginRegisterForm = (props) => {
     const {pathname} = useLocation();
     const path = pathname.replace(/^\/|\/$/g, '');
     const [type, setType] = useState(path); //State for changing Form registration type
+    const captchaRef = useRef(null)
   
     // Form data state
     const form = useForm({
@@ -39,11 +41,11 @@ const LoginRegisterForm = (props) => {
     });
 
      // Login and Registration Handler hook
-     const {loginHandler, registerHandler, userErrorHandler, loading} = useLoginRegister(form);
+     const {loginHandler, registerHandler, userErrorHandler, loading} = useLoginRegister(form, captchaRef);
 
   
     return (
-        <Container size='xs' h='100vh' pt={50}>
+        <Container size='xs' mih='100vh' pt={50}>
             <Paper radius="md" p="xl" withBorder {...props}>
               <Text size="lg" fw={500}>
                 Welcome to COINGRIP, {type} with
@@ -104,6 +106,11 @@ const LoginRegisterForm = (props) => {
             radius="md"
           />
           )}
+
+{/* Google recaptcha set up */}
+          <Stack align='center'>
+            <Captcha captchaRef={captchaRef}/>
+          </Stack>
 
           {type === 'register' && (
             <Checkbox

@@ -12,6 +12,10 @@ import classes from './CSS/Navigation.module.css';
 //     email: 'janspoon@fighter.dev',
 //     image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
 //   };
+
+const linkStyle = {
+  textDecoration: 'none'
+}
   
   const tabs = [
     'Home',
@@ -57,7 +61,7 @@ const NavUserMenu = ({user}) => {
               </Menu.Target>
               <Menu.Dropdown>
 
-              <Link to='/dashboard'>
+              <Link style={linkStyle} to='/dashboard'>
                 <Menu.Item
                   leftSection={
                     <IconDashboard style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
@@ -68,7 +72,7 @@ const NavUserMenu = ({user}) => {
                 </Link>
   
                 <Menu.Label>Settings</Menu.Label>
-                <Link to='/dashboard/setting'>
+                <Link style={linkStyle} to='/dashboard/setting'>
                 <Menu.Item
                   leftSection={
                     <IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />

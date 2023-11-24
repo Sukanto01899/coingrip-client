@@ -1,5 +1,5 @@
 import axios from "axios";
-const base_url = 'http://localhost:4000/api';
+const base_url = import.meta.env.VITE_base_url;
 // const base_url = 'https://send-money.onrender.com/api';
 
 const baseApi = axios.create({
@@ -82,6 +82,11 @@ export const exchangeAssetFn = async ({from, to, amount})=>{
 export const getMyBalanceFn = async ()=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.post("/user/balance");
+  return res.data;
+}
+// reCaptcha verify request
+export const verifyCaptchaFn = async ({token})=>{
+  const res = await baseApi.post("/user/captcha/verify", {token});
   return res.data;
 }
 

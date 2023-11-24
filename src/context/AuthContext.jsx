@@ -62,7 +62,7 @@ export const AuthContextProvider = ({children})=>{
   const {data: assets, isLoading, error} = useQuery({
     queryKey: ['assets'],
     queryFn: getAssetsFn,
-    refetchInterval: 1000 * 60,
+    refetchInterval: 15000,
     select: (data)=> data,
     onSuccess: (data) => {
       dispatch({ type: 'SET_ASSETS', payload: {assets: data, loading: false, error: null} });
