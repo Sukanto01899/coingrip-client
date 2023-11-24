@@ -60,7 +60,7 @@ const BalanceState = ({setShowBalance, showBalance}) => {
         <Progress.Root size={34} classNames={{ label: classes.progressLabel }} mt={40}>
           {segments}
         </Progress.Root>
-        <SimpleGrid cols={{ base: 1, xs: 3 }} mt="xl">
+        <SimpleGrid cols={{ base: 2, xs: 3 }} mt="xl">
           {descriptions}
         </SimpleGrid>
       </Paper>

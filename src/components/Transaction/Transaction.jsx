@@ -7,15 +7,16 @@ const Transaction = ({transaction}) => {
     const [transactionTime, setTransactionTime] =useState('');
     const {state: {authUser}} = useAuthData();
     const [timeEx, setTimeEx] =useState('');
-    const msec = Date.now() - new Date(transaction?.createdAt)
-    const sec = msec / 1000;
-    const min = sec /60;
-    const hour = min / 60;
-    const day = hour / 24;
-    const month = day / 30;
-    const year = month / 365;
 
     useEffect(()=>{
+        const msec = Date.now() - new Date(transaction?.createdAt)
+        const sec = msec / 1000;
+        const min = sec /60;
+        const hour = min / 60;
+        const day = hour / 24;
+        const month = day / 30;
+        const year = month / 365;
+
         if(year >= 1){
             setTransactionTime(year)
             setTimeEx('years')
@@ -53,8 +54,6 @@ const Transaction = ({transaction}) => {
         }
     }
 
-    const transferBadge = transaction?.from?.uuid === authUser?._id ? <Badge color="yellow">Send</Badge> : <Badge color="green">Received</Badge>
-    const exchangeBadge = <Badge color="blue">Exchange</Badge>
 
     return (
         <Table.Tr>

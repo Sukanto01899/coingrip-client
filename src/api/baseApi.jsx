@@ -30,9 +30,9 @@ export const getAssetsFn = async()=>{
   
 }
 
-export const getTransactionsFn = async()=>{
+export const getTransactionsFn = async({limit, page})=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
-  const res = await baseApi.get('/transaction');
+  const res = await baseApi.get(`/transaction?limit=${limit}&page=${page}`);
   return res.data;
 }
 
@@ -44,7 +44,7 @@ export const getAccessTokenFn = async ({name, username, email, emailVerified})=>
 
 export const getDemoBalance = async (assetId)=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
-  const res = await baseApi.get(`/transaction/demo/${assetId}`, {assetId: assetId});
+  const res = await baseApi.get(`/transaction/demo/${assetId}`);
   return res.data;
 }
 

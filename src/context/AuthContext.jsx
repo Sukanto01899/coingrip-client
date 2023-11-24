@@ -60,9 +60,9 @@ export const AuthContextProvider = ({children})=>{
   const [state, dispatch] = useReducer(stateReducer, initialState);
 
   const {data: assets, isLoading, error} = useQuery({
-    queryKey: ['assets'], 
+    queryKey: ['assets'],
     queryFn: getAssetsFn,
-    staleTime: 10000,
+    refetchInterval: 1000 * 60,
     select: (data)=> data,
     onSuccess: (data) => {
       dispatch({ type: 'SET_ASSETS', payload: {assets: data, loading: false, error: null} });

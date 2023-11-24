@@ -15,7 +15,7 @@ const Layout = ({children}) => {
 
              <Navigation/>
             <Container mt={80} size='md'>
-            {(user && !emailVerified) && <Alert mb={16} title="Please verify you email!" py={5} color='red' icon={icon}>
+            {(user && !emailVerified) && <Alert radius='md' mb={16} title="Please verify you email!" py={5} color='red' icon={icon}>
                 <Anchor component="button"  size='xs'>Send verification email</Anchor>
             </Alert>}
               {children}

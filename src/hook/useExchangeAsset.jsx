@@ -7,7 +7,6 @@ const useExchangeAsset = () => {
 
     const {mutateAsync: exchangeAsset, isLoading} = useMutation((data)=>exchangeAssetFn(data), {
         onSuccess: (data)=>{
-            toast.success({title: "Successful", message: 'Successfully exchanged'});
             return Promise.all(
                 [
                   queryClient.invalidateQueries(["balance"]),
@@ -19,7 +18,11 @@ const useExchangeAsset = () => {
             console.log(err)
             toast.error({title: err?.response?.data?.message || err.message, message: "Please try again later"})
         },
-        onSettled: ()=>{}
+        onSettled: (data, err)=>{
+            if(!err){
+                toast.success({title: "Successful", message: 'Successfully exchanged'});
+            }
+        }
     })
 
     return {exchangeAsset, isLoading}

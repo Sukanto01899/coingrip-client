@@ -7,11 +7,11 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_apiKey,
-  authDomain: "money-transper-app.firebaseapp.com",
-  projectId: "money-transper-app",
-  storageBucket: "money-transper-app.appspot.com",
-  messagingSenderId: "483562373112",
-  appId: "1:483562373112:web:fc9c3c0b47992ffa34e00d"
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId
 };
 
 // Initialize Firebase
