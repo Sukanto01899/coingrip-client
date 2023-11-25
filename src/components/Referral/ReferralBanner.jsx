@@ -1,9 +1,11 @@
-import { Button, Image, Text, TextInput, Title } from '@mantine/core';
+import { ActionIcon, Button, CopyButton, Image, Text, TextInput, Title, Tooltip } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import image from '../../assets/detailscard.svg';
+import { useAuthData } from '../../context/AuthContext';
 import classes from "./CSS/ReferralBanner.module.css";
 
 const ReferralBanner = () => {
+  const {state: {authUser}} = useAuthData()
     const clipboard = useClipboard();
 
     return (
@@ -20,10 +22,22 @@ const ReferralBanner = () => {
         <div className={classes.controls}>
           <TextInput
             readOnly
-            placeholder="https://coingrip.netlify.app?refer=8jeorhjteuu3o4"
+            value={`https://coingrip.netlify.app?referral=${authUser._id}`}
             classNames={{ input: classes.input, root: classes.inputWrapper }}
           />
-          <Button className={classes.control}>Copy Link</Button>
+          <CopyButton value={authUser._id} timeout={2000}>
+      {({ copied, copy }) => (
+        <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
+          <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>
+            {copied ? (
+              <Button>Copied</Button>
+            ) : (
+              <Button >Copy</Button>
+            )}
+          </ActionIcon>
+        </Tooltip>
+      )}
+         </CopyButton>
         </div>
       </div>
       <Image src={image} className={classes.image} />

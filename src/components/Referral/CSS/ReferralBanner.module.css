@@ -42,6 +42,7 @@
 
 .controls {
   display: flex;
+  align-items: center;
   margin-top: var(--mantine-spacing-xl);
 }
 

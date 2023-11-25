@@ -7,7 +7,7 @@ import { useAuthData } from '../../context/AuthContext';
 import useSendAsset from '../../hook/useSendAsset';
 
 const SendForm = ({id, close}) => {
-    const {state: {authUser: account, assetsData}} = useAuthData();
+    const {state: {authUser: account, assetsData, balanceData}} = useAuthData();
     const [assetBalance, setAssetBalance] = useState(0)
     const [fee, setFee] = useState(0)
     const icon = <IconCurrencyDram style={{ width: rem(20), height: rem(20) }} stroke={1.5} />;
@@ -49,14 +49,13 @@ const SendForm = ({id, close}) => {
 
       // Asset balance update
       useEffect(()=>{
-        const totalValue = account?.balance?.assets?.find(ass => ass.assetId === form.values.assetId);
+        const totalValue = balanceData?.balance?.assets?.find(ass => ass.assetId === form.values.assetId);
         setAssetBalance(totalValue?.amount || 0)
       }, [form.values.assetId])
 
       // Fee calculation
       useEffect(()=>{
         const neededAsset = assetsData?.assets?.find(asset => asset._id === form.values.assetId);
-        console.log(neededAsset)
         const fee_amount = neededAsset?.fee;
         const calculatedFee = (parseFloat(form.values.amount || 0) * fee_amount) / 100;
         setFee(calculatedFee)

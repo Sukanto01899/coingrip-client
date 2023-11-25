@@ -17,12 +17,14 @@ const baseApi = axios.create({
       return Promise.reject(error)
     })
 
+    // Get user account data
 export const getMeFn =async ()=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.post('/user/account');
   return res.data;
 }
 
+// Get all asset
 export const getAssetsFn = async()=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.get('/asset/all');
@@ -30,18 +32,22 @@ export const getAssetsFn = async()=>{
   
 }
 
+// Get all transaction
 export const getTransactionsFn = async({limit, page})=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.get(`/transaction?limit=${limit}&page=${page}`);
   return res.data;
 }
 
-export const getAccessTokenFn = async ({name, username, email, emailVerified})=>{
+// Get jwt access token
+export const getAccessTokenFn = async ({name, username, email, emailVerified, query})=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
-  const res = await baseApi.post('/user/create', {name, username, email, emailVerified});
+  console.log(query)
+  const res = await baseApi.post(`/user/create?referral=${query}`, {name, username, email, emailVerified});
   return res.data;
 }
 
+// Get test demo balance
 export const getDemoBalance = async (assetId)=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.get(`/transaction/demo/${assetId}`);
@@ -68,17 +74,20 @@ export const disableAuthFn = async ({code})=>{
   return res.data;
 }
 
+// Send crypto one to another account
 export const sendAssetFn = async ({amount, to, assetId, pin}) =>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.post('/transaction/send', {amount, to, assetId, pin});
   return res.data;
 }
 
+// Exchange crypto
 export const exchangeAssetFn = async ({from, to, amount})=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.post(`/transaction/exchange?from=${from}&to=${to}`, {amount});
   return res.data;
 }
+// get user balance
 export const getMyBalanceFn = async ()=>{
   baseApi.defaults.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`;
   const res = await baseApi.post("/user/balance");
@@ -87,6 +96,22 @@ export const getMyBalanceFn = async ()=>{
 // reCaptcha verify request
 export const verifyCaptchaFn = async ({token})=>{
   const res = await baseApi.post("/user/captcha/verify", {token});
+  return res.data;
+}
+// Get a user referrals details
+export const getReferralsFn = async ()=>{
+  const res = await baseApi.post("/user/referrals");
+  return res.data;
+}
+
+// get user kyc details
+export const getKycFn = async ({id})=>{
+  const res = await baseApi.get(`/user/kyc/${id}`);
+  return res.data;
+}
+// submit kyc
+export const submitKycFn = async (data)=>{
+  const res = await baseApi.post(`/user/kyc/submit`, data);
   return res.data;
 }
 

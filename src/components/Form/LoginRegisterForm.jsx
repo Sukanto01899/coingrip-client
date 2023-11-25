@@ -33,6 +33,7 @@ const LoginRegisterForm = (props) => {
         password: '',
         confirmPassword: '',
         terms: true,
+        query: props.query
       },
       validate: {
         email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),

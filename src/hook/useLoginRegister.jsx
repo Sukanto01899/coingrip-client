@@ -33,6 +33,7 @@ const useLoginRegister = (form, captchaRef) => {
         try{
           const res = await verifyCaptcha(captchaRef);
           if(res.success){
+            console.log(res)
             await signInWithEmailAndPassword(email, password);
           }else{
             throw new Error('Invalid captcha')
@@ -51,8 +52,14 @@ const useLoginRegister = (form, captchaRef) => {
         }
 
         try{
-          await createUserWithEmailAndPassword(email, password);
-          await updateProfile({displayName: name});
+          const res = await verifyCaptcha(captchaRef);
+          if(res.success){
+            await createUserWithEmailAndPassword(email, password);
+             await updateProfile({displayName: name});
+          }else{
+            throw new Error('Invalid captcha')
+          }
+          
         }catch(err){
           toast.error({title: err.message, message: 'Please try again'})
         }
@@ -60,7 +67,7 @@ const useLoginRegister = (form, captchaRef) => {
 
     useEffect(()=>{
         if(user && !updating){
-            saveUserDatabase(user)
+            saveUserDatabase(user, form.values.query)
         }
     }, [user, updating])
 

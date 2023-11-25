@@ -32,7 +32,7 @@ const useSaveUserDatabase = () => {
     })
 
     // User data validation & call mutation function
-    const saveUserDatabase =async (user)=>{
+    const saveUserDatabase =async (user, query)=>{
         // return in user not available
             if(!user) return toast.error();
             
@@ -42,8 +42,7 @@ const useSaveUserDatabase = () => {
             const providerId = user?.user?.providerData[0].providerId;
             const emailVerified = providerId === "twitter.com" ? true : user?.user?.emailVerified;
 
-            getAccessToken({name, email, username, emailVerified})
-        
+            getAccessToken({name, email, username, emailVerified, query})
       }
   
     return [saveUserDatabase, isLoading, error]

@@ -1,8 +1,26 @@
 import { Avatar, Button, Divider, Fieldset, FileButton, Group, Paper, Stack, Text, TextInput, Title } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
 
 const ProfileSetting = () => {
+    const [user] = useAuthState(auth)
     const [files, setFiles] = useState([]);
+    const form = useForm({
+        initialValues: {
+            name: '',
+            twitter: '',
+            github: '',
+            linkedin: ''
+        },
+        validate: {
+            twitter: (val) => !val.includes('twitter.com') ? 'Invalid' : null,
+            github: (val) => !val.includes('github.com') ? 'Invalid' : null,
+            linkedin: (val) => !val.includes('linkedin.com') ? 'Invalid' : null
+        }
+    })
+
     return (
         <Paper p='md'>
             <Title size='md'>Profile setting</Title>
@@ -11,7 +29,7 @@ const ProfileSetting = () => {
             <Stack>
                 
                <Group>
-                  <Avatar src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png" size='xl'/>
+                  <Avatar src={user.photoURL} size='xl'/>
                   <FileButton onChange={setFiles} accept="image/png,image/jpeg">
                   {(props) => <Button {...props}>Upload image</Button>}
                  </FileButton>
@@ -20,14 +38,15 @@ const ProfileSetting = () => {
                
 
                <TextInput
-        rightSectionPointerEvents="none"
-        label="Your name"
-        placeholder="Your name"
-      />
+                   rightSectionPointerEvents="none"
+                   label="Your name"
+                   placeholder="Your name"
+                />
                <Fieldset legend="Social accounts">
-                 <TextInput label="Twitter" placeholder="Your name" />
-                 <TextInput label="Email" placeholder="Email" mt="md" />
-                </Fieldset>
+                 <TextInput label="Twitter" placeholder="Your twitter profile link" />
+                 <TextInput label="Github" placeholder="Your github profile link" mt="md" />
+                 <TextInput label="Linkedin" placeholder="Your linkedin profile link" mt="md" />
+               </Fieldset>
 
 
                 <Button type='submit'>Submit</Button>

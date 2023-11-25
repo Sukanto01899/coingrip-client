@@ -5,6 +5,7 @@ const Captcha = ({captchaRef}) => {
     const colorScheme = useColorScheme();
 
     return <ReCAPTCHA
+            style={{transform: "scale(0.77)", WebkitTransform: "scale(0.77)", }}
            theme={colorScheme}
            sitekey={import.meta.env.VITE_CAPTCHA_SITE_KEY}
            ref={captchaRef}

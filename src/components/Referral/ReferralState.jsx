@@ -1,26 +1,27 @@
-import { Center, Group, Paper, RingProgress, SimpleGrid, Text, rem } from '@mantine/core';
-import { IconArrowDownRight, IconArrowUpRight } from '@tabler/icons-react';
+import { Center, Group, Paper, RingProgress, SimpleGrid, Text } from '@mantine/core';
+import { IconPoint, IconUserCheck, IconUserPlus } from '@tabler/icons-react';
 
-const icons = {
-  up: IconArrowUpRight,
-  down: IconArrowDownRight,
-};
+// const icons = {
+//   up: IconArrowUpRight,
+//   down: IconArrowDownRight,
+// };
 
-const data = [
-  { label: 'Page views', stats: '456,578', progress: 65, color: 'teal', icon: 'up' },
-  { label: 'New users', stats: '2,550', progress: 72, color: 'blue', icon: 'up' },
-  {
-    label: 'Orders',
-    stats: '4,735',
-    progress: 52,
-    color: 'red',
-    icon: 'down',
-  },
-];
+const ReferralState = ({referralsData, loading}) => {
+  console.log(referralsData)
+  const data = [
+    { label: 'Total Points', stats: referralsData?.point, icon: IconPoint, color: 'teal' },
+    { label: 'Total Referrals', stats: referralsData?.referrals?.length, icon: IconUserPlus, color: 'blue' },
+    {
+      label: 'Successful Referrals',
+      stats: referralsData?.referrals.filter(ref => ref.isSuccess === true).length,
+      icon: IconUserCheck,
+      color: 'green',
+    },
+  ];
 
-const ReferralState = () => {
+
     const stats = data.map((stat) => {
-        const Icon = icons[stat.icon];
+        const Icon = stat.icon
         return (
           <Paper withBorder radius="md" p="xs" key={stat.label}>
             <Group>
@@ -28,10 +29,10 @@ const ReferralState = () => {
                 size={80}
                 roundCaps
                 thickness={8}
-                sections={[{ value: stat.progress, color: stat.color }]}
+                sections={[{ value: 100, color: stat.color }]}
                 label={
                   <Center>
-                    <Icon style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
+                    <Icon/>
                   </Center>
                 }
               />

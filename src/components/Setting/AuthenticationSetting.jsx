@@ -1,4 +1,4 @@
-import { Button, Divider, Group, Paper, Text, Title } from '@mantine/core';
+import { Button, Card, Divider, Group, Paper, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconCheck, IconX } from '@tabler/icons-react';
 import React from 'react';
@@ -29,11 +29,18 @@ const AuthenticationSetting = () => {
     <Paper p='md'>
         <Title size='md'>Authentication setting</Title>
         <Divider my={20}/>
-       <Group align='center' mb={10}>
+       
+       <Card>
+        <Group justify='space-between'>
+
+        <Group align='center' mb={10}>
        {authUser?.auth?.otp_enabled ? <Text>2FA Enabled<IconCheck color='green'/></Text> : <Text>2FA Disabled <IconX color='red'/></Text>}
        </Group>
 
         {authUser?.auth?.otp_enabled ? <Button color='red' onClick={authDisableFormOpen}>Disable</Button> : <Button loading={isLoading} onClick={generateAuthData}>Set up authentication</Button>}
+
+        </Group>
+       </Card>
 
 {/* Authentication active form */}
         <ModalLayout opened={authGenerateFormOpened} close={authGenerateFormClose} title='Authentication set up'>

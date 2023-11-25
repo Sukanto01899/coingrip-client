@@ -1,5 +1,6 @@
 import { Box, Group, NumberFormatter, Paper, Progress, SimpleGrid, Text, rem } from '@mantine/core';
 import { IconArrowUpRight, IconEyeOff } from '@tabler/icons-react';
+import { memo } from 'react';
 import { useAuthData } from '../../../context/AuthContext';
 import LightAndDarkButton from '../../Button/LightAndDarkButton';
 import classes from './BalanceState.module.css';
@@ -12,15 +13,15 @@ const data = [
 
 
 const BalanceState = ({setShowBalance, showBalance}) => {
-    const {state} = useAuthData();
+    const {state: {balanceData, assetsData, authUser}} = useAuthData();
   
-    const segments = state?.authUser?.balance?.assets?.map((asset, i) => (
+    const segments = balanceData?.balance?.assets?.map((asset, i) => (
         <Progress.Section value={asset.amount / 100} color='#47d6ab' key={i}>
           {asset.part > 10 && <Progress.Label>{asset.amount / 100}%</Progress.Label>}
         </Progress.Section>
       ));
     
-      const descriptions = state?.assetsData?.assets?.map((asset) => (
+      const descriptions = assetsData?.assets?.map((asset) => (
         <Box key={asset.name} style={{ borderBottomColor: '#47d6ab' }} className={classes.stat}>
           <Text tt="uppercase" fz="xs" c="dimmed" fw={700}>
             {asset.name}
@@ -40,7 +41,7 @@ const BalanceState = ({setShowBalance, showBalance}) => {
         <Group justify="space-between">
           <Group align="flex-end" gap="xs">
             <Text fz="xl" fw={700}>
-              {showBalance ?  <NumberFormatter prefix='$' thousandSeparator decimalScale={2} value={state?.balanceData?.balance?.totalValue} /> : '*****' }
+              {showBalance ?  <NumberFormatter prefix='$' thousandSeparator decimalScale={2} value={balanceData?.balance?.totalValue} /> : '*****' }
             </Text>
             <Text c="teal" className={classes.diff} fz="sm" fw={700}>
               <span>18%</span>
@@ -54,7 +55,7 @@ const BalanceState = ({setShowBalance, showBalance}) => {
         </Group>
   
         <Text c="dimmed" fz="sm">
-          ID: {state?.authUser?._id}
+          ID: {authUser?._id}
         </Text>
   
         <Progress.Root size={34} classNames={{ label: classes.progressLabel }} mt={40}>
@@ -67,4 +68,4 @@ const BalanceState = ({setShowBalance, showBalance}) => {
     );
 };
 
-export default BalanceState;
+export default memo(BalanceState);
