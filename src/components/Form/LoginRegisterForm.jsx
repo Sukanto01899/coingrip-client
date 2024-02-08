@@ -33,7 +33,7 @@ const LoginRegisterForm = (props) => {
         password: '',
         confirmPassword: '',
         terms: true,
-        query: props.query
+        referral: props.query
       },
       validate: {
         email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
@@ -104,6 +104,15 @@ const LoginRegisterForm = (props) => {
             value={form.values.confirmPassword}
             onChange={(event) => form.setFieldValue('confirmPassword', event.currentTarget.value)}
             error={form.errors.confirmPassword && 'Password should include at least 6 characters'}
+            radius="md"
+          />
+          )}
+        {type === 'register' && (
+            <TextInput
+            label="Referral (Optional)"
+            placeholder="Referral code"
+            value={form.values.referral}
+            onChange={(event) => form.setFieldValue('referral', event.currentTarget.value)}
             radius="md"
           />
           )}

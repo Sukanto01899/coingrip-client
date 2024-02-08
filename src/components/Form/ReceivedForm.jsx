@@ -24,6 +24,12 @@ const ReceivedForm = ({ asset}) => {
     .then(setQrcode)
   }, [])
 
+  useEffect(()=>{
+    fetch('http://localhost:4000/api/transaction/generate/btc')
+    .then(res => res.json())
+    .then(data => console.log(data))
+  }, [])
+
     return (
         <Stack>
             <Card withBorder>

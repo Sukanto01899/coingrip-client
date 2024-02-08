@@ -157,7 +157,7 @@ const SendForm = ({id, close}) => {
 
     {/* Pin input */}
 
-    <Stack align='center'>
+    {account?.auth?.otp_enabled ? <Stack align='center'>
         <Text>Enter Authentication code</Text>
         <PinInput 
         required
@@ -168,9 +168,9 @@ const SendForm = ({id, close}) => {
         onChange={(value) => form.setFieldValue('pin', value)}
         error={form.errors.pin && 'error'}
         />
-    </Stack>
+    </Stack> :  <Text c='red'>Please enable 2FA</Text>}
 
-    <Button loading={isLoading} type='submit' w='100%'>Send</Button>
+    <Button disabled={!account?.auth?.otp_enabled} loading={isLoading} type='submit' w='100%'>Send</Button>
     </Stack>
     </form>
         </>

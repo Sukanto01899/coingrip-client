@@ -3,12 +3,14 @@ import { useForm } from '@mantine/form';
 import { IconCheck, IconCopy } from '@tabler/icons-react';
 import QRCode from 'qrcode';
 import React, { useEffect, useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { verifyOtpFn } from '../../api/baseApi';
 import toast from '../Toast/Toast';
 
 const ActiveAuthForm = ({otpUrl, base32, close}) => {
     const [qrCode, setQrCode] = useState('');
+    const queryClient = useQueryClient();
+
     const form = useForm({
         initialValues: {
             code: ''
@@ -22,6 +24,7 @@ const ActiveAuthForm = ({otpUrl, base32, close}) => {
     const {mutate: otpVerifyHandler, isLoading} = useMutation((data)=> verifyOtpFn(data), {
         onSuccess: (data)=>{
             close();
+            queryClient.refetchQueries(['authUser'], {active: true})
             toast.success({title: "Successful", message: "Successfully verified"})
         },
         onError: (err)=>{

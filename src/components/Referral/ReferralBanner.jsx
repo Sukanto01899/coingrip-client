@@ -22,10 +22,10 @@ const ReferralBanner = () => {
         <div className={classes.controls}>
           <TextInput
             readOnly
-            value={`https://coingrip.netlify.app?referral=${authUser._id}`}
+            value={`${import.meta.env.VITE_WEB_INVITE_URL}/register?referral=${authUser._id}`}
             classNames={{ input: classes.input, root: classes.inputWrapper }}
           />
-          <CopyButton value={authUser._id} timeout={2000}>
+          <CopyButton value={`${import.meta.env.VITE_WEB_INVITE_URL}/register?referral=${authUser._id}`} timeout={2000}>
       {({ copied, copy }) => (
         <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
           <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>

@@ -3,7 +3,7 @@ import { sendAssetFn } from "../api/baseApi";
 import toast from "../components/Toast/Toast";
 
 const useSendAsset = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   // Use mutation to send request
   const {mutate: sendAsset, data: transactionData, isLoading, error} = useMutation((data)=> sendAssetFn(data), {
     onSuccess: (data)=>{
