@@ -1,4 +1,4 @@
-import { Button, Group, Stepper } from '@mantine/core';
+import { Button, Group, NumberInput, Select, Stack, Stepper } from '@mantine/core';
 import React, { useState } from 'react';
 import ServiceLayout from '../components/Layout/ServiceLayout';
 
@@ -10,7 +10,18 @@ const BuyCrypto = () => {
         <ServiceLayout title="Buy">
             <Stepper active={active} onStepClick={setActive} allowNextStepsSelect={false}>
         <Stepper.Step label="First step" description="Create an account">
-          Step 1 content: Create an account
+          <Stack>
+           <Select
+              label="Select asset"
+              placeholder="Pick value"
+              data={['React', 'Angular', 'Vue', 'Svelte']}
+            />
+             <NumberInput
+               label="Enter amount"
+               description="USD value"
+               placeholder="Input placeholder"
+             />
+          </Stack>
         </Stepper.Step>
         <Stepper.Step label="Second step" description="Verify email">
           Step 2 content: Verify email
