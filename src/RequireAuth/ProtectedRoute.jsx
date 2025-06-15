@@ -4,7 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import auth from '../../firebase.init';
 import { getMeFn, getMyBalanceFn } from '../api/baseApi';
 import PageLoader from '../components/LoadingComponents/PageLoader';
-// import toast from '../components/Toast/Toast';
+import toast from '../components/Toast/Toast';
 import { useAuthData } from '../context/AuthContext';
 import useLogout from '../hook/useLogout';
 
@@ -41,7 +41,7 @@ const ProtectedRoute = ({children}) => {
     }
 
     if(error || googleError){
-      // toast.error({title: error.message, message: 'Please try again'})
+      toast.error({title: error.message, message: 'Please try again'})
     } 
     
 
